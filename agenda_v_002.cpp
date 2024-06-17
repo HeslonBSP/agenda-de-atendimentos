@@ -73,8 +73,28 @@ void agendarHorario() {
         printf("Cliente não encontrado!\n");
         return;
     }
+    
+    printf("Horários disponíveis:\n");
+	  for (int hora = 9; hora < 18; hora++) {
+	    for (int minuto = 0; minuto < 60; minuto += 30) {
+	      char horarioDisponivel[6];
+	      sprintf(horarioDisponivel, "%02d:%02d", hora, minuto);
+	
+	      bool isAvailable = true;
+	      for (int i = 0; i < totalAgendamentos; i++) {
+	        if (strcmp(agendamentos[i].horario, horarioDisponivel) == 0) {
+	          isAvailable = false;
+	          break;
+	        }
+	      }
+	
+	      if (isAvailable) {
+	        printf("- %s\n", horarioDisponivel);
+	      }
+	    }
+	  }
 
-    printf("Horário (hh:mm): ");
+    printf("\nEscolha um horário (hh:mm): ");
     fgets(horario, 6, stdin);
     horario[strcspn(horario, "\n")] = '\0';
 
