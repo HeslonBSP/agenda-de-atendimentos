@@ -40,8 +40,19 @@ void cadastrarCliente() {
     novoCliente.cpf[strcspn(novoCliente.cpf, "\n")] = '\0';
 
     printf("Data de Nascimento (dd/mm/aaaa): ");
-    fgets(novoCliente.dataNascimento, 11, stdin);
-    novoCliente.dataNascimento[strcspn(novoCliente.dataNascimento, "\n")] = '\0';
+  	char dataNascimentoBuffer[100];
+  	fgets(dataNascimentoBuffer, 100, stdin);
+
+
+  	char *ptr = dataNascimentoBuffer;
+  	while (*ptr != '\0' && *ptr != '\n') {
+    	ptr++;
+  	}
+  	*ptr = '\0';
+
+
+  	strncpy(novoCliente.dataNascimento, dataNascimentoBuffer, sizeof(novoCliente.dataNascimento));
+  	novoCliente.dataNascimento[sizeof(novoCliente.dataNascimento) - 1] = '\0';
 
     printf("Telefone: ");
     fgets(novoCliente.telefone, 15, stdin);
@@ -52,8 +63,14 @@ void cadastrarCliente() {
     novoCliente.email[strcspn(novoCliente.email, "\n")] = '\0';
 
     clientes[totalClientes++] = novoCliente;
+    
+	printf("\nCliente cadastrado com sucesso!\n");
+	printf("Nome: %s\n", novoCliente.nome);
+	printf("CPF: %s\n", novoCliente.cpf);
+	printf("Data de Nascimento: %s\n", novoCliente.dataNascimento);
+	printf("Telefone: %s\n", novoCliente.telefone);
+	printf("E-mail: %s\n", novoCliente.email);
 
-    printf("Cliente cadastrado com sucesso!\n");
 }
 
 void agendarHorario() {
